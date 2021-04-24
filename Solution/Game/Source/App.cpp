@@ -106,6 +106,8 @@ bool App::Awake()
 // Called before the first frame
 bool App::Start()
 {
+	ChangeFPS(60);
+
 	startupTime.Start();
 	lastSecFrameTime.Start();
 	frameTime.Start();
@@ -113,7 +115,6 @@ bool App::Start()
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
-
 
 	while(item != NULL && ret == true)
 	{
@@ -125,25 +126,30 @@ bool App::Start()
 	return ret;
 }
 
+void App::ChangeFPS(int fps)
+{
+	cappedMs = 1000 / fps;
+	framerate = fps;
+}
 // Called each loop iteration
 bool App::Update()
 {
 	bool ret = true;
 
-	//TODO: Con esto puedo bloquear los FPSs
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) changeFPS = !changeFPS;
-	
-	if(changeFPS)
-	{
-		cappedMs = 1000 / 30;
-		framerate = 30;
-	}
-	else
-	{
-		cappedMs = 1000 / 60;
-		framerate = 60;
+	////TODO: Con esto puedo bloquear los FPSs
+	//if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) changeFPS = !changeFPS;
+	//
+	//if(changeFPS)
+	//{
+	//	cappedMs = 1000 / 30;
+	//	framerate = 30;
+	//}
+	//else
+	//{
+	//	cappedMs = 1000 / 60;
+	//	framerate = 60;
 
-	}
+	//}
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		stateFile.reset();
 
@@ -183,7 +189,6 @@ void App::PrepareUpdate()
 {
 	frameCount++;
 	lastSecFrameCount++;
-
 
 	// Calculate the dt: differential time since last frame
 	dt = frameTime.ReadSec();

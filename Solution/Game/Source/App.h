@@ -57,6 +57,8 @@ public:
 	void LoadConfigRequested();
 	void SaveConfigRequested() const;
 
+	void ChangeFPS(int fps);
+
 	void SetLastScene(Module* scene) { lastScene = scene; }
 	float GetCapMs();
 
