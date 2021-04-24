@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+	<app framerate_cap="60">
+		<title>DINO</title>
+		<organization>UPC</organization>
+	</app>
+	<renderer>
+		<vsync value="0" />
+	</renderer>
+	<window>
+		<resolution width="1280" height="720" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<audio>
+		<music volume="1" />
+		<fx volume="9" />
+	</audio>
+	<map>
+		<folder>Assets/Maps/</folder>
+	</map>
+</config>
