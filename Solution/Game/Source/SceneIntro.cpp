@@ -38,7 +38,7 @@ bool SceneIntro::Start()
 	app->SetLastScene((Module*)this);
 	transition = false;
 
-	app->audio->PlayMusic("Assets/Audio/Music/music_intro.ogg");
+	//app->audio->PlayMusic("Assets/Audio/Music/music_intro.ogg");
 
 	app->render->camera.x = app->render->camera.y = 0;
 
@@ -58,10 +58,7 @@ bool SceneIntro::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 
-		app->removeGame = false;
 		TransitionToScene(SceneType::LEVEL1);
-		app->sceneManager->lastLevel = 1;
-		isContinue = false;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
@@ -98,7 +95,6 @@ bool SceneIntro::PostUpdate()
 		default:
 			break;
 		}
-
 
 		app->fonts->BlitText(posX, posY + (padding * i), 0, Text, { 255, 255, 255 });
 	}

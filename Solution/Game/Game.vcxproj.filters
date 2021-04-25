@@ -68,6 +68,9 @@
     <ClCompile Include="Source\Fonts.cpp">
       <Filter>Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\VideoPlayer.cpp">
+      <Filter>Modules\VideoPlayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -142,6 +145,9 @@
     <ClInclude Include="Source\Fonts.h">
       <Filter>Modules\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\VideoPlayer.h">
+      <Filter>Modules\VideoPlayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -170,6 +176,9 @@
     </Filter>
     <Filter Include="Modules\Gameplay\Scenas">
       <UniqueIdentifier>{1583aee1-b8bd-42dc-8c9a-3647825b204e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\VideoPlayer">
+      <UniqueIdentifier>{590672cb-0041-49ab-9c07-e240160073f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

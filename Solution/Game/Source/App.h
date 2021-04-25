@@ -19,6 +19,7 @@ class Textures;
 class Audio;
 class SceneManager;
 class Fonts;
+class VideoPlayer;
 
 class App
 {
@@ -59,7 +60,7 @@ public:
 
 	void ChangeFPS(int fps);
 
-	void SetLastScene(Module* scene) { lastScene = scene; }
+	void SetLastScene(Module* scene) { lastScene = scene; };
 	float GetCapMs();
 
 	int GetFramerate();
@@ -103,6 +104,7 @@ public:
 	Audio* audio = nullptr;
 	SceneManager* sceneManager = nullptr;
 	Fonts* fonts = nullptr;
+	VideoPlayer* video = nullptr;
 
 	bool fullScreen=0;
 	bool removeGame = false;
@@ -143,7 +145,7 @@ private:
 	SString filenameGame = "save_game.xml";
 	SString filenameConfig = "config.xml";
 
-	float fPS = 0;
+	int FPS = 0;
 	bool changeFPS=false;
 
 	Module* lastScene;

@@ -2,6 +2,8 @@
 
 #include "SceneIntro.h"
 #include "Scene.h"
+#include "VideoPlayer.h"
+
 #include "Fonts.h"
 
 #include "Input.h"

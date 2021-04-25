@@ -74,9 +74,6 @@ public:
 	bool active = true;
 	SString name;
 
-	bool victory=false;
-	bool lose=false;
-
 	// Possible properties
 	bool loaded = false;
 

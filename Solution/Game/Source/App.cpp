@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "SceneManager.h"
 #include "Fonts.h"
+#include "VideoPlayer.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -25,6 +26,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	sceneManager = new SceneManager(input, render, tex);
 	fonts = new Fonts();
+	video = new VideoPlayer();
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -34,6 +37,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(sceneManager);
 	AddModule(fonts);
+	AddModule(video);
 
 	audio->active = true;
 	
@@ -193,13 +197,13 @@ void App::PrepareUpdate()
 	// Calculate the dt: differential time since last frame
 	dt = frameTime.ReadSec();
 	frameTime.Start();
-	fPS = SDL_GetTicks();
+	FPS = SDL_GetTicks();
 }
 
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-	float tmpFPS = SDL_GetTicks() - fPS;
+	float tmpFPS = SDL_GetTicks() - FPS;
 
 	if (saveGameRequested == true) SaveGame(filenameGame.GetString());
 	if (loadGameRequested == true) LoadGame(filenameGame.GetString());

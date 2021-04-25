@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Scene.h"
 #include "SceneManager.h"
+#include "VideoPlayer.h"
 
 #include <SDL_mixer\include\SDL_mixer.h>
 
@@ -36,15 +37,11 @@ bool Scene::Start()
 
 	app->SetLastScene((Module*)this);
 
-	victory=false;
-	
 	// Active calls
 	app->audio->active = true;
 
-	// Load music
-	app->audio->PlayMusic("Assets/Audio/Music/level_music.ogg");
+	app->video->StartVideo("Assets/Video/video1");
 
-	//app->dialogueSystem->missClick = false;
 	return true;
 }
 
@@ -59,6 +56,11 @@ bool Scene::Update(float dt)
 {
 	bool ret = true;
 
+	if (app->video->GetFinishVideo())
+	{
+		TransitionToScene(SceneType::INTRO);
+	}
+
 	return ret;
 }
 
@@ -67,7 +69,6 @@ bool Scene::Update(float dt)
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
-
 	bool ret = true;
 
 	return ret;
