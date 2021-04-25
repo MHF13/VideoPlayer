@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Input.h"
 #include "Render.h"
+#include "Window.h"	
 #include "VideoPlayer.h"
 
 #include <SDL_mixer\include\SDL_mixer.h>
@@ -82,6 +83,9 @@ void VideoPlayer::StartVideo(char* filePath)
 	pgf = AVIStreamGetFrameOpen(pavi, NULL);              // Create The PGETFRAME Using Our Request Mode
 	if (pgf == NULL)
 		LOG("Failed To Open The AVI Frame");
+
+
+	app->win->GetWindowSize(screenWidth,screenHeight);
 }
 
 bool VideoPlayer::Update(float dt)
@@ -120,11 +124,12 @@ bool VideoPlayer::Update(float dt)
 bool VideoPlayer::PostUpdate()
 {
 	//TODO 6.1: Draw the texture of the frame.
-	app->render->DrawTexture(textureFrame, 0, 0, NULL,0,180);
+	app->render->DrawTexture(textureFrame, (screenWidth/2)-(width/2), (screenHeight / 2) - (height / 2), NULL,0,180);
+	
 
 	//TODO BONUS:
-
-
+	app->render->DrawRectangle({(int)screenWidth-200,(int)screenHeight-40,100,20},255,255,255,255);
+	
 
 	// TODO 5.2: Unload the texture and free the surface.
 	app->tex->UnLoad(textureFrame);

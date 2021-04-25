@@ -47,6 +47,8 @@ private:
 	int FPS = 0;
 	int width = 0;
 	int height = 0;
+	uint screenWidth = 0;
+	uint screenHeight = 0;
 
 
 	bool finish = false;
