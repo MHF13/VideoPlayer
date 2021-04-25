@@ -47,8 +47,6 @@ private:
 	int FPS = 0;
 	int width = 0;
 	int height = 0;
-	uint screenWidth = 0;
-	uint screenHeight = 0;
 
 
 	bool finish = false;
@@ -57,5 +55,12 @@ private:
 	char* audio = "";
 
 	SString path = "";
+
+	//
+	bool skip = false;
+	SDL_Rect skipBarMax = { 0,0,0,0 };
+	SDL_Rect skipBar = { 0,0,0,0 };
+	int skipProgres = 0;
+	//
 
 };

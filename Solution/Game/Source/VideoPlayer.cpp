@@ -36,6 +36,7 @@ void VideoPlayer::StartVideo(char* filePath)
 {
 	active = true;
 	finish = false;
+	skip = false;
 	frameIndex = 0;
 	nFrames = 0;
 	width = 0;
@@ -85,13 +86,13 @@ void VideoPlayer::StartVideo(char* filePath)
 		LOG("Failed To Open The AVI Frame");
 
 
-	app->win->GetWindowSize(screenWidth,screenHeight);
+	//TODO: BONUS
+	skipBarMax = { (int)WINDOW_W - 100,(int)WINDOW_H - 40,80,20 };
+	skipBar = { (int)WINDOW_W - 100,(int)WINDOW_H - 40,0,20 };
 }
 
 bool VideoPlayer::Update(float dt)
 {
-
-
 
 	if (frameIndex < nFrames){
 		//Uncomment this after you have finished TODO 3.
@@ -116,7 +117,31 @@ bool VideoPlayer::Update(float dt)
 		CleanUp();
 	}
 
-
+	
+	//
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	{
+		skip = true;
+		skipBar.w++;
+		if (skipBar.w > skipBarMax.w)
+		{
+			skipBar.w = skipBarMax.w;
+			CleanUp();
+		}
+	}
+	else
+	{
+		if (skipBar.w > 0)
+		{
+			skipBar.w--;
+		}
+		else
+		{
+			skipBar.w = 0;
+			skip = false;
+		}
+	}
+	//
 
 	return true;
 }
@@ -124,11 +149,14 @@ bool VideoPlayer::Update(float dt)
 bool VideoPlayer::PostUpdate()
 {
 	//TODO 6.1: Draw the texture of the frame.
-	app->render->DrawTexture(textureFrame, (screenWidth/2)-(width/2), (screenHeight / 2) - (height / 2), NULL,0,180);
+	app->render->DrawTexture(textureFrame, (WINDOW_W / 2) - (width / 2), (WINDOW_H / 2) - (height / 2), NULL, 0, 180);
 	
-
 	//TODO BONUS:
-	app->render->DrawRectangle({(int)screenWidth-200,(int)screenHeight-40,100,20},255,255,255,255);
+	if (skip) {
+
+		app->render->DrawRectangle(skipBarMax, 255, 255, 255, 255);
+		app->render->DrawRectangle(skipBar, 59, 131, 189, 255);
+	}
 	
 
 	// TODO 5.2: Unload the texture and free the surface.
@@ -155,12 +183,6 @@ bool VideoPlayer::CleanUp()
 	AVIStreamRelease(pavi);// Release The Stream
 
 	AVIFileExit();// Release The File
-
-
-
-	// TODO 5.2: Unload the texture and free the surface.
-	app->tex->UnLoad(textureFrame);
-	SDL_FreeSurface(surface);
 
 	Mix_PauseMusic();
 

@@ -53,6 +53,3 @@ private:
 };
 
 #endif // __SCENEINTRO_H__
-
-
-

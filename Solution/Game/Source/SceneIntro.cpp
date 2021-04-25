@@ -73,6 +73,12 @@ bool SceneIntro::Update(float dt)
 
 		return false;
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+
+		return false;
+	}
+
 	return ret;
 }
 
@@ -95,10 +101,8 @@ bool SceneIntro::PostUpdate()
 		default:
 			break;
 		}
-
 		app->fonts->BlitText(posX, posY + (padding * i), 0, Text, { 255, 255, 255 });
 	}
-
 
 	return ret;
 }
