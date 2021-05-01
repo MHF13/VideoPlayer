@@ -40,15 +40,10 @@ private:
 
 	void NextFrame();
 
-	/*
-	AVISTREAMINFO       psi;                        // Pointer To A Structure Containing Stream Info
-	PAVISTREAM			pavi;                       // Handle To An Open Stream
-	PGETFRAME			pgf;                        // Pointer To A GetFrame Object
-	*/
-	PAVIFILE pInFile = nullptr;
-	AVIFILEINFO pInFileInf;
-	PAVISTREAM pInStream = nullptr;
-	PGETFRAME pgf = nullptr;
+	PAVIFILE fileAVI = nullptr;
+	AVIFILEINFO fileInfo = {0};
+	PAVISTREAM fileStream = nullptr;
+	PGETFRAME frmSequence = nullptr;
 
 	SDL_Surface* surface = nullptr;
 	SDL_Texture* textureFrame = nullptr;
@@ -70,7 +65,7 @@ private:
 	char* video = "";
 	char* audio = "";
 
-	//TODO BONUS:
+	// TODO BONUS: Skip bar parameters 
 	bool skip = false;
 	SDL_Rect skipBarMax = { 0,0,0,0 };
 	SDL_Rect skipBar = { 0,0,0,0 };

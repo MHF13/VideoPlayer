@@ -38,8 +38,6 @@ bool SceneIntro::Start()
 	app->SetLastScene((Module*)this);
 	transition = false;
 
-	//app->audio->PlayMusic("Assets/Audio/Music/music_intro.ogg");
-
 	app->render->camera.x = app->render->camera.y = 0;
 
 	posX = 100, posY = 100;
