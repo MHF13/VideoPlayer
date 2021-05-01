@@ -192,9 +192,6 @@ void App::FinishUpdate()
 {
 	float tmpFPS = SDL_GetTicks() - FPS;
 
-	if (saveGameRequested == true) SaveGame(filenameGame.GetString());
-	if (loadGameRequested == true) LoadGame(filenameGame.GetString());
-
 	if (loadConfigRequested == true) LoadGame(filenameConfig.GetString());
 	if (saveConfigRequested == true) SaveGame(filenameConfig.GetString());
 
@@ -365,7 +362,8 @@ void App::SaveConfigRequested() const
 // then call all the modules to load themselves
 bool App::LoadGame(SString filename)
 {
-	bool ret = false;
+	bool ret = true;
+	/*
 	//  Load savegame.xml file using load_file() method from the xml_document class
 	pugi::xml_parse_result result = stateFile.load_file(filename.GetString());
 
@@ -393,14 +391,14 @@ bool App::LoadGame(SString filename)
 	}
 	loadGameRequested = false;
 	loadConfigRequested = false;
-
+	*/
 	return ret;
 }
 
 bool App::SaveGame(SString filename) const
 {
 	bool ret = true;
-
+	/*
 	pugi::xml_document saveFile;
 	pugi::xml_node rootSaveFile;
 
@@ -433,6 +431,7 @@ bool App::SaveGame(SString filename) const
 	saveGameRequested = false;
 	saveConfigRequested = false;
 	app->removeGame = false;
+	*/
 	return ret;
 }
 

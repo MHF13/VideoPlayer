@@ -74,11 +74,6 @@ bool SceneIntro::Update(float dt)
 		return false;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
-
-		return false;
-	}
-
 	return ret;
 }
 
@@ -113,8 +108,7 @@ bool SceneIntro::CleanUp()
 		return true;
 
 	LOG("Freeing scene");
-	Mix_HaltMusic();
-
+	
 	active = false;
 
 	return true;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
 	<app framerate_cap="60">
-		<title>DINO</title>
+		<title>VideoPlayer</title>
 		<organization>UPC</organization>
 	</app>
 	<renderer>
@@ -14,11 +14,4 @@
 		<resizable value="false" />
 		<fullscreen_window value="false" />
 	</window>
-	<audio>
-		<music volume="128" />
-		<fx volume="128" />
-	</audio>
-	<map>
-		<folder>Assets/Maps/</folder>
-	</map>
 </config>

@@ -32,7 +32,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-
 	bool LoadState(pugi::xml_node& data);
 	bool SaveState(pugi::xml_node& data)const;
 
@@ -41,9 +40,6 @@ private:
 
 	int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
 	bool transition = false;
-
-	pugi::xml_document sceneFile;
-	pugi::xml_node sceneStateFile;
 
 	char Text[20] = { "\0" };
 	int posX = 0, posY = 0;

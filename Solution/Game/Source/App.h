@@ -9,7 +9,6 @@
 #include "PugiXml/src/pugixml.hpp"
 
 #define CONFIG_FILENAME		"config.xml"
-#define SAVE_STATE_FILENAME "save_game.xml"
 
 // Modules
 class Window;
@@ -142,7 +141,6 @@ private:
 
 	mutable bool saveConfigRequested;
 	bool loadConfigRequested;
-	SString filenameGame = "save_game.xml";
 	SString filenameConfig = "config.xml";
 
 	int FPS = 0;

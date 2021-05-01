@@ -25,8 +25,8 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake()
 {
-	LOG("Loading Scene");
 	bool ret = true;
+	LOG("Loading Scene");
 	numThisScene = 1;
 	return ret;
 }
@@ -34,13 +34,11 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-
+	videoActive = false;
 	app->SetLastScene((Module*)this);
 
-	// Active calls
-	app->audio->active = true;
-
-	app->video->StartVideo("Assets/Video/video1");
+	// TODO last: play video 
+	videoActive = app->video->StartVideo("Assets/Video/video1");
 
 	return true;
 }
@@ -56,6 +54,12 @@ bool Scene::Update(float dt)
 {
 	bool ret = true;
 
+	if (videoActive){
+		videoActive = !app->video->GetFinishVideo();
+		return true;
+	}
+
+	//When the video ends we will return to the first scene 
 	if (app->video->GetFinishVideo())
 	{
 		TransitionToScene(SceneType::INTRO);
@@ -63,8 +67,6 @@ bool Scene::Update(float dt)
 
 	return ret;
 }
-
-
 
 // Called each loop iteration
 bool Scene::PostUpdate()

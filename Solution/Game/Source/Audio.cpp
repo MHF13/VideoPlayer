@@ -37,8 +37,8 @@ bool Audio::Awake(pugi::xml_node& config)
 	}
 	else
 	{
-		volumeMusic = config.child("music").attribute("volume").as_int(MIX_MAX_VOLUME);
-		volumeFx = config.child("fx").attribute("volume").as_int(MIX_MAX_VOLUME);
+		volumeMusic = MIX_MAX_VOLUME;
+		volumeFx = MIX_MAX_VOLUME;
 	}
 
 	// Load support for the JPG and PNG image formats

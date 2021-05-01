@@ -72,7 +72,7 @@ public:
 public:
 
 	bool active = true;
-	SString name;
+	SString name = "";
 
 	// Possible properties
 	bool loaded = false;

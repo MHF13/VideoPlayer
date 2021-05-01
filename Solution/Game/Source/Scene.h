@@ -50,7 +50,8 @@ private:
 
 	int numThisScene = 1;
 
-	Animation* idleAnim= new Animation();
+	bool videoActive = false;
+
 	int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
 	float speedImg=0;
 
