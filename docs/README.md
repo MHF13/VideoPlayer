@@ -32,6 +32,7 @@ Although in January 2021 Epic Games acquired the company to which it belongs (RA
 How hard it can be to play a video in Unity?
 <iframe width="560" height="315" src="images/UnityVideo.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+
 # Vfw.h 
 Vfw.h It is a microsoft library that allows us to play .avi video files.
 
@@ -51,6 +52,7 @@ PGETFRAME frmSequence
 This function initializes the AVIFile library.
 
 ### AVIFileExit()
+This function close the AVIFile library.
 
 ### AVIFileOpenA(PAVIFILE &fileAVI,LPCSTR (LPCSTR)video,UINT OF_SHARE_DENY_WRITE,LPCLSID NULL)
 This open input AVI file
