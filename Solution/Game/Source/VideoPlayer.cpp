@@ -47,7 +47,7 @@ bool VideoPlayer::StartVideo(char* filePath)
 	audio = "";
 	video = "";
 
-	// TODO 1: We make the paths for the video and audio files from the filePath 
+	// TODO 1.1: We make the paths for the video and audio files from the filePath 
 	int size = strlen(filePath);
 	int nieuwSize = size + 5;
 	audio = (char*)malloc(nieuwSize);
@@ -112,22 +112,17 @@ void VideoPlayer::NextFrame()
 {
 
 	// TODO 5: Create a texture of the current frame 
-	
 	// Create a bitmap for select frame
 	LPBITMAPINFOHEADER bitmap = NULL;
 	bitmap = (LPBITMAPINFOHEADER)AVIStreamGetFrame(frmSequence, frameIndex);
+
 	// Pointer to bitmap data
 	pointerData = (char*)bitmap + bitmap->biSize + bitmap->biClrUsed * sizeof(RGBQUAD); 
 
-	// Create a surface of the current frame and with it obtain a texture.
-	/*
-	TODO 5.1: Create a surface using the bitmap data we have above this TODO,
-	and create the texture of the frame with that surface (use LoadSurface from textures module)
-			- pdata holds the texture data (pixels)
-			- biBitCount holds the depht in bits and is contained in the LPBITMAPINFOHEADER structure
-			- pitch is the length of a row of pixels in bytes (width * 3)
-	*/
+	// Create a surface of the current frame and with the surface obtain a texture.
 	surface = SDL_CreateRGBSurfaceFrom(pointerData, width, height, bitmap->biBitCount, width * 3, 0, 0, 0, 0);
+	
+	// Get the texture 
 	textureFrame = app->tex->LoadSurface(surface);
 
 	// Next frame
@@ -195,7 +190,7 @@ bool VideoPlayer::PostUpdate()
 {
 	if (state == PLAY)
 	{
-		// TODO 7: Draw the texture of the frame.
+		// TODO 7: Draw the texture of the frame.(180 angle because the image obtained is rotated)
 		app->render->DrawTexture(textureFrame, (WINDOW_W / 2) - (width / 2), (WINDOW_H / 2) - (height / 2), NULL, 0, 180);
 	
 		// TODO BONUS: Draw Skip Bar.
@@ -204,7 +199,7 @@ bool VideoPlayer::PostUpdate()
 			app->render->DrawRectangle(skipBar, 59, 131, 189, 255);
 		}
 
-		// TODO 7.1:To avoid memory overload, we will UnLoad the texture and free the surface after each frame is painted. 
+		// TODO 7:To avoid memory overload, we will UnLoad the texture and free the surface after each frame is painted. 
 		app->tex->UnLoad(textureFrame);
 		SDL_FreeSurface(surface);
 
@@ -225,7 +220,7 @@ bool VideoPlayer::CleanUp()
 	frameIndex = 0;
 	finish = true;
 
-	// TODO 7.2:Remember to download the texture and free the surface here too.
+	// TODO 7.1:Remember to unload the texture and free the surface here too.
 	app->tex->UnLoad(textureFrame);
 	SDL_FreeSurface(surface);
 
@@ -235,7 +230,6 @@ bool VideoPlayer::CleanUp()
 	// TODO 6.1: Stop the music 
 	Mix_HaltMusic();
 	
-
 	// TODO 3.1: Restore FPS 
 	app->ChangeFPS(prevFPS);
 

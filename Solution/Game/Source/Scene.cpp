@@ -37,7 +37,7 @@ bool Scene::Start()
 	videoActive = false;
 	app->SetLastScene((Module*)this);
 
-	// TODO last: play video 
+	// TODO 1: play video 
 	videoActive = app->video->StartVideo("Assets/Video/video1");
 
 	return true;
