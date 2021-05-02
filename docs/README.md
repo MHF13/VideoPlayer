@@ -172,7 +172,6 @@ In order to obtain a frame of the video to draw on the screen must follow the fo
 At the end of this function we will increase the index. 
 
 ```
-
 void VideoPlayer::NextFrame()
 {
   // TODO 5: Create a texture of the current frame 
@@ -193,8 +192,10 @@ void VideoPlayer::NextFrame()
   frameIndex++;
 }
 ```
+
 ## TODO 6
 In the first state of the state machine we will make the audio play. 
+
 ```
 bool VideoPlayer::Update(float dt)
   ...
@@ -205,8 +206,10 @@ bool VideoPlayer::Update(float dt)
   }
   ...
 ```
+
 ### TODO 6.1
 We must also stop the music once the video is finished.
+
 ```
 bool VideoPlayer::CleanUp()
 {
@@ -215,9 +218,12 @@ bool VideoPlayer::CleanUp()
   Mix_HaltMusic();
   ...
 }
+
 ```
+
 ## TODO 7
 We paint the texture of the current frame but it will only be done during the PLAY state It is important that both, the texture and the surface are released to avoid memory leaks 
+
 ```
 bool VideoPlayer::PostUpdate()
 {
@@ -233,8 +239,10 @@ bool VideoPlayer::PostUpdate()
   return true;
 }
 ```
+
 ### TODO 7.1
 We must also release the texture and the surface when the reproduction ends 
+
 ```
 bool VideoPlayer::CleanUp()
 {
