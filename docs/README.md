@@ -19,7 +19,7 @@ These formats allow us to identify what type of data they contain, but something
 
 A basic example we can have with the .mp4 format, which is the most used and which in turn uses the most used codecs are H.264 for video, a codec that has become a standard for high definition videos, and AAC for audio, which although it is a lossy digital audio compression, gives a high compression with the highest possible quality. 
 
-# What is used in the industry? 
+# In the industry 
 ## Bink 
 This tool is practically an industry standard.
 Since March 1999 with the sixth generation, going through an update in 2013 with Bink 2 and until today it has been the most used for its fomidable decompression efficiency.
@@ -32,12 +32,78 @@ Although in January 2021 Epic Games acquired the company to which it belongs (RA
 How hard it can be to play a video in Unity?
 <iframe width="560" height="315" src="images/UnityVideo.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-# What has been used? 
-### State machine
-In the Update of 'VideoPlayer' we see a state machine that will play and end the video.
-- [START] Play the audio and access the first frame.
-- [PLAY] Will access the frames as the video progresses to the end of it.
-- [FINISH] Call the function that will disable the video player.
+# Vfw.h 
+Vfw.h It is a microsoft library that allows us to play .avi video files.
+
+## Specific variables 
+Specific variables of the library that we will use.
+
+PAVIFILE fileAVI
+
+AVIFILEINFO fileInfo
+
+PAVISTREAM fileStream
+
+PGETFRAME frmSequence
+
+## Functions 
+### AVIFileInit()
+This function initializes the AVIFile library.
+
+### AVIFileExit()
+
+### AVIFileOpenA(PAVIFILE &fileAVI,LPCSTR (LPCSTR)video,UINT OF_SHARE_DENY_WRITE,LPCLSID NULL)
+This open input AVI file
+* fileAVI: Pointer to a buffer that receives the new IAVIFile interface pointer.
+* video: string containing the name of the file to open.
+* OF_SHARE_DENY_WRITE: Access mode to use when opening the file.
+
+### AVIFileInfo(PAVIFILE fileAVI,LPAVIFILEINFO &fileInfo,LONG sizeof(AVIFILEINFO))
+This macro get file info
+* fileAVI: Handle to an open AVI file.
+* fileInfo: Pointer to the structure used to return file information.
+* sizeof(AVIFILEINFO): Size, in bytes, of the structure
+
+### AVIFileGetStream(PAVIFILE fileAVI,PAVISTREAM &fileStream,DWORD streamtypeVIDEO,LONG 0)
+Get pointer to the stream interface.
+* fileAVI: Handle to an open AVI file.
+* fileStream: Pointer to the new stream interface.
+* streamtypeVIDEO: Indicating the type of stream to open.
+* 0: Count of the stream type.
+
+### AVIStreamLength(PAVISTREAM fileStream)
+This function returns the length of the stream.
+* fileStream: Handle to an open stream.
+
+Return LONG: the number of frames. 
+
+###  AVIStreamLengthTime(PAVISTREAM fileStream)
+This macro returns the length of a stream in time.
+* fileStream: Handle to an open stream.
+
+Return LONG: video duration in milliseconds.
+
+### AVIStreamGetFrameOpen(PAVISTREAM fileStream,LPBITMAPINFOHEADER NULL)
+This function prepares to decompress video frames from the specified video stream.
+* fileStream: Pointer to the video stream used as the video source.
+* NULL: Pointer to a structure that defines the desired video format. Specify NULL to use a default format. 
+
+Return PGETFRAME: Returns a GetFrame object.
+
+### AVIStreamGetFrame(PGETFRAME frmSequence,LONG frameIndex)
+* frmSequence: Pointer to the IGetFrame interface.
+* frameIndex: Position, in samples, within the stream of the desired frame.
+
+Return LPVOID: Returns a pointer to the frame.
+
+# Code structure 
+To facilitate the implementation of the videoPlayer we have created a module that will be in charge of opening the video and audio files, that the program is synchronized and reproduced. Once completed release memory and the program will close the library closed. 
+
+Following the TODOs we can see this structure:
+* At the moment that we want to start a video we call the StartVideo () function with the path of the video files without the extension.
+* Extract and save information from files.
+* Keep getting a frame and render until the video ends.
+* When the video has finished, release the memory 
 
 # TODOs
 If you download the Release and open the Handout you can, following these TODOs, implement a video player in a small project. To do this we will use Vfw.h, which is a header which is available in windows without having to download anything. 
@@ -62,6 +128,7 @@ For audio, we can export with audacity in .ogg format.
 We will start by calling the video player at the moment we want it to start, in this case at the Start of Scene by calling the StartVideo function which will return a Boolean.
 We will match it to the variable videoActive, it tells us that has started playing a video.
 It is important that the path is unformatted so that it can be used for both audio and video. 
+
 ```
 bool Scene::Start()
 {
@@ -71,8 +138,10 @@ bool Scene::Start()
   ...
 }
 ```
+
 ### TODO 1.1
 To access the audio and video files, we will copy the path into 2 char * and add the corresponding extension to each one of them. 
+
 ```
 bool VideoPlayer::StartVideo(char* filePath)
 {
@@ -90,18 +159,25 @@ bool VideoPlayer::StartVideo(char* filePath)
   ...
 }
 ```
+
 ## TODO 2
 We initialize the AVIFile library and we will access the AVI file and its data. 
 The module already includes the necessary library (#include <Vfw.h>).
+
 ```
+bool VideoPlayer::Awake(pugi::xml_node&)
+{
+	active = false;
+	// TODO 2: Activate the library
+	// The AVIFileInit function initializes the AVIFile library.
+	AVIFileInit();
+	return true;
+}
+
 bool VideoPlayer::StartVideo(char* filePath)
 {
   ...
-  // TODO 2: Activate the library and access the video information 
-
-  // The AVIFileInit function initializes the AVIFile library.
-  AVIFileInit();
-
+  // TODO 2: Access the video information 
   // Open input AVI file
   AVIFileOpenA(&fileAVI, (LPCSTR)video, OF_SHARE_DENY_WRITE, NULL);
 
@@ -118,9 +194,24 @@ bool VideoPlayer::StartVideo(char* filePath)
   ...
 }
 ```
+
+### TODO 2.1
+Remember that whenever we have made you AVIFileInit() we must also close it.
+
+```
+bool VideoPlayer::CleanUp()
+{
+	...
+	// TODO 2.1: Close the library
+	AVIFileExit();
+	...
+}
+```
+
 ## TODO 3
 In order for our program to synchronize with the video's FPS, we will obtain its frame with a few simple operations and we will change the program's FPS to that of the video.
 Also, we will save the framerate to restore it at the end of the video. 
+
 ```
 bool VideoPlayer::StartVideo(char* filePath)
 {
@@ -135,10 +226,12 @@ bool VideoPlayer::StartVideo(char* filePath)
   ...
 }
 ```
+
 ### TODO 3.1
 Once the reproduction has finished we will have to restore the framerate of the program.
+
 ```
-bool VideoPlayer::CleanUp()
+bool VideoPlayer::CloseVideoPlayer()
 {
   ...
   // TODO 3.1: Restore FPS 
@@ -146,8 +239,10 @@ bool VideoPlayer::CleanUp()
   ...
 }
 ```
+
 ## TODO 4
 Unzip the frames of the stream and store it in frmSequence
+
 ```
 bool VideoPlayer::StartVideo(char* filePath)
 {
@@ -163,6 +258,7 @@ bool VideoPlayer::StartVideo(char* filePath)
   ...
 }
 ```
+
 ## TODO 5
 In order to obtain a frame of the video to draw on the screen must follow the following steps:
 1. Create a bitmap of the desired frame
@@ -212,7 +308,7 @@ bool VideoPlayer::Update(float dt)
 We must also stop the music once the video is finished.
 
 ```
-bool VideoPlayer::CleanUp()
+bool VideoPlayer::CloseVideoPlayer()
 {
   ...
   // TODO 6.1: Stop the music 
@@ -245,7 +341,7 @@ bool VideoPlayer::PostUpdate()
 We must also release the texture and the surface when the reproduction ends 
 
 ```
-bool VideoPlayer::CleanUp()
+bool VideoPlayer::CloseVideoPlayer()
 {
   ...
     // TODO 7.1:Remember to unload the texture and free the surface here too.
