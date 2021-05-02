@@ -170,7 +170,9 @@ In order to obtain a frame of the video to draw on the screen must follow the fo
 3. Obtain a surface of the desired frame
 4. Create a texture from the surface
 At the end of this function we will increase the index. 
+
 ```
+
 void VideoPlayer::NextFrame()
 {
   // TODO 5: Create a texture of the current frame 
