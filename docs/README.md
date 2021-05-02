@@ -2,33 +2,66 @@
 
 # Links
 - [Vfw.h documentation](https://docs.microsoft.com/en-us/windows/win32/api/vfw/)
-- [Handout](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
 - [Presentation](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
+- [Handout](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
 - [Solution](https://github.com/MHF13/VideoPlayer/tree/main/Solution) 
 - [Release](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
 
+# My goal 
+The objective of this research has been the implementation of a video player in a project structure as similar as possible to the one used in the project 2 subject at the university.
+The method that we will see is not the best, I'm sure about that, but it can be useful if our objective is to reproduce a small video. 
+
+# Format & codecs
+.avi, .mkv, .mp4, .ogg, .png
+Whether for video, audio, image, etc...
+These formats allow us to identify what type of data they contain, but something important to keep in mind is the codec used for the data in the format. 
+![formats](images/formats.jpg)
+
+A basic example we can have with the .mp4 format, which is the most used and which in turn uses the most used codecs are H.264 for video, a codec that has become a standard for high definition videos, and AAC for audio, which although it is a lossy digital audio compression, gives a high compression with the highest possible quality. 
+
+# What is used in the industry? 
+## Bink 
+This tool is practically an industry standard.
+Since March 1999 with the sixth generation, going through an update in 2013 with Bink 2 and until today it has been the most used for its fomidable decompression efficiency.
+Its use was not cheap $ 8,500, but depending on your needs it was worth it.
+Although in January 2021 Epic Games acquired the company to which it belongs (RAD Game Tools) to implement it in Unreal Engine, so it will be with us much longer and possibly more accessible. 
+
+![Bink](images/Bink.png)
+
+## Unity 
+How hard it can be to play a video in Unity?
+<iframe width="560" height="315" src="images/UnityVideo.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # What has been used? 
-
-## State machine
-En el Update de 'VideoPlayer' podremos ver una maquina de estados que se encarga de la reproduccion y finalizacion del video.
-- [START] Reporiduce el audio del video y accede al primer frame.
-- [PLAY] Accedera a los frames a medida que el video avance hasta el final de este.
-- [FINISH] Llamara a la funcion que desactivara el reproductor de video.
-
+### State machine
+In the Update of 'VideoPlayer' we see a state machine that will play and end the video.
+- [START] Play the audio and access the first frame.
+- [PLAY] Will access the frames as the video progresses to the end of it.
+- [FINISH] Call the function that will disable the video player.
 
 # TODOs
-Si descargáis la Release y abrís el proyecto Hangouts podréis, siguiendo estos TODOs implementar un video player en un pequeño proyecto.
+If you download the Release and open the Handout you can, following these TODOs, implement a video player in a small project. To do this we will use Vfw.h, which is a header which is available in windows without having to download anything. 
 
 ## TODO 0
-Antes de comencar hay que descomprimir el video para que pueda ser leido por nuestro programa.
-Dirigios a \Output\Assets\Video y descomprimid el archivo llamado video1.zip, es importante que el video y el audio que encontrareis tengan el mismo nombre.
+Before starting, you have to unzip the video so that it can be read by our program.
+Go to "\Output\Assets\Video" and unzip the file called video1.zip, it is important that the video and audio have the same name. 
 
-![TODO_0](images/eru's_adventures.gif)
+![TODO_0](images/TODO_00.png)
+
+### Do you want to put another video? 
+Do you remember the part about formats and codecs? For our videoplayer use in .avi format video codec Intel IYUV.
+You can specify the code when you export with premier, we will use these options. 
+
+![TODO_0.1](images/TODO_01.png)
+
+For audio, we can export with audacity in .ogg format.
+
+![TODO_0.2](images/TODO_02.png)
 
 ## TODO 1
-Empezaremos llamando al reproductor de video en el momento en el que queremos que se inicie, en este caso en el Start de Scene llamando a la funcion StartVideo que devolvera un booleano. 
-Lo igualaremos a la variable videoActive, esta nos indicara que se ha iniciado la reproduccion de un video.
-Es importante que el path este sin formato para que pueda ser usado tanto para el audio como para el video mas adelante.
+We will start by calling the video player at the moment we want it to start, in this case at the Start of Scene by calling the StartVideo function which will return a Boolean.
+We will match it to the variable videoActive, it tells us that has started playing a video.
+It is important that the path is unformatted so that it can be used for both audio and video. 
 ```
 bool Scene::Start()
 {
@@ -39,7 +72,7 @@ bool Scene::Start()
 }
 ```
 ### TODO 1.1
-Para acceder a los archivos de audio y video capiaremos el path en 2 char* y añadiremos la extension correspondiente a cada uno de ellos.
+To access the audio and video files, we will copy the path into 2 char * and add the corresponding extension to each one of them. 
 ```
 bool VideoPlayer::StartVideo(char* filePath)
 {
@@ -58,7 +91,8 @@ bool VideoPlayer::StartVideo(char* filePath)
 }
 ```
 ## TODO 2
-Inizializaremos la libreria AVIFile y accederemos al archivo AVI y a sus datos
+We initialize the AVIFile library and we will access the AVI file and its data. 
+The module already includes the necessary library (#include <Vfw.h>).
 ```
 bool VideoPlayer::StartVideo(char* filePath)
 {
@@ -85,8 +119,8 @@ bool VideoPlayer::StartVideo(char* filePath)
 }
 ```
 ## TODO 3
-Para que nuestro programa se sincronize con los FPS del video obtendremos su framarete con unas operaciones sencillas y cambiaremos los FPS del programa al del video.
-A su vez, guardaremos como variable el framerate que tenia anteriormente nuestro programa para devolverselo al finalizar el video.
+In order for our program to synchronize with the video's FPS, we will obtain its frame with a few simple operations and we will change the program's FPS to that of the video.
+Also, we will save the framerate to restore it at the end of the video. 
 ```
 bool VideoPlayer::StartVideo(char* filePath)
 {
@@ -102,7 +136,7 @@ bool VideoPlayer::StartVideo(char* filePath)
 }
 ```
 ### TODO 3.1
-Una vez que la reproducción haya finalizado deberemos restaurar el framerate del programa
+Once the reproduction has finished we will have to restore the framerate of the program.
 ```
 bool VideoPlayer::CleanUp()
 {
@@ -113,8 +147,7 @@ bool VideoPlayer::CleanUp()
 }
 ```
 ## TODO 4
-Descomprimiremos los fotogramas del stream del video y los almacenaremos en frmSequence
-
+Unzip the frames of the stream and store it in frmSequence
 ```
 bool VideoPlayer::StartVideo(char* filePath)
 {
@@ -131,12 +164,12 @@ bool VideoPlayer::StartVideo(char* filePath)
 }
 ```
 ## TODO 5
-Para poder obtener un frame del video para dibujarlo en pantalla deberemos seguir los siguientes pasos:
-1. Crear un bitmap del frame deseado
-2. Almacenar un puntero a bitmapData
-3. Obtener una surface del frame deseado
-4. Crear una textura a partir de la surface
-Al final de esta funcion aumentaremos el indice para que posteriormente se obtenga el siguiente frame.
+In order to obtain a frame of the video to draw on the screen must follow the following steps:
+1. Create a bitmap of the desired frame
+2. Store a pointer to bitmapData
+3. Obtain a surface of the desired frame
+4. Create a texture from the surface
+At the end of this function we will increase the index. 
 ```
 void VideoPlayer::NextFrame()
 {
@@ -159,8 +192,7 @@ void VideoPlayer::NextFrame()
 }
 ```
 ## TODO 6
-En el primer estado de la mquina de estados haremos que el audio se reproduzca.
-
+In the first state of the state machine we will make the audio play. 
 ```
 bool VideoPlayer::Update(float dt)
   ...
@@ -172,7 +204,7 @@ bool VideoPlayer::Update(float dt)
   ...
 ```
 ### TODO 6.1
-Tambien deberemos detener la musica una vez finalizada la reproduccion
+We must also stop the music once the video is finished.
 ```
 bool VideoPlayer::CleanUp()
 {
@@ -183,8 +215,7 @@ bool VideoPlayer::CleanUp()
 }
 ```
 ## TODO 7
-Pintaremos la textura del frame actual pero solo se hara durante el estado de PLAY
-It is important that both the texture and the surface are released to avoid memory leaks 
+We paint the texture of the current frame but it will only be done during the PLAY state It is important that both, the texture and the surface are released to avoid memory leaks 
 ```
 bool VideoPlayer::PostUpdate()
 {
@@ -201,7 +232,7 @@ bool VideoPlayer::PostUpdate()
 }
 ```
 ### TODO 7.1
-Tambien debemos liberar la textura y la surface cunado finalize la reproduccion
+We must also release the texture and the surface when the reproduction ends 
 ```
 bool VideoPlayer::CleanUp()
 {
@@ -215,45 +246,3 @@ bool VideoPlayer::CleanUp()
 
 # TODO BONUS
 
-
-
-
-You can use the [editor on GitHub](https://github.com/MHF13/VideoPlayer/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-
-Syntax highlighted code block
-
-```markdown
-# Header 1
-## Header 2
-### Header 3
-```
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/MHF13/VideoPlayer/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
