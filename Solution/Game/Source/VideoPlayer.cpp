@@ -24,6 +24,9 @@ VideoPlayer::~VideoPlayer()
 bool VideoPlayer::Awake(pugi::xml_node&)
 {
 	active = false;
+	// TODO 2: Activate the library
+	// The AVIFileInit function initializes the AVIFile library.
+	AVIFileInit();
 	return true;
 }
 
@@ -59,11 +62,7 @@ bool VideoPlayer::StartVideo(char* filePath)
 	strcat_s(video, nieuwSize, ".avi");
 
 
-	// TODO 2: Activate the library and access the video information 
-
-	// The AVIFileInit function initializes the AVIFile library.
-	AVIFileInit();
-
+	// TODO 2: Access the video information 
 	// Open input AVI file
 	AVIFileOpenA(&fileAVI, (LPCSTR)video, OF_SHARE_DENY_WRITE, NULL);
 
@@ -152,7 +151,7 @@ bool VideoPlayer::Update(float dt)
 		break;
 	case FINISH:
 	{
-		CleanUp();
+		CloseVideoPlayer();
 	}
 		break;
 	default:
@@ -167,7 +166,7 @@ bool VideoPlayer::Update(float dt)
 		if (skipBar.w > skipBarMax.w)
 		{
 			skipBar.w = skipBarMax.w;
-			CleanUp();
+			CloseVideoPlayer();
 		}
 	}
 	else
@@ -203,10 +202,27 @@ bool VideoPlayer::PostUpdate()
 		app->tex->UnLoad(textureFrame);
 		SDL_FreeSurface(surface);
 
-	
 	}
 
 	return true;
+}
+
+void VideoPlayer::CloseVideoPlayer()
+{
+	frameIndex = 0;
+	finish = true;
+
+	// TODO 7.1:Remember to unload the texture and free the surface here too.
+	app->tex->UnLoad(textureFrame);
+	SDL_FreeSurface(surface);
+
+	// TODO 6.1: Stop the music 
+	Mix_HaltMusic();
+
+	// TODO 3.1: Restore FPS 
+	app->ChangeFPS(prevFPS);
+
+	active = false;
 }
 
 bool VideoPlayer::CleanUp()
@@ -217,23 +233,10 @@ bool VideoPlayer::CleanUp()
 
 	LOG("Freeing scene");
 
-	frameIndex = 0;
-	finish = true;
+	CloseVideoPlayer();
 
-	// TODO 7.1:Remember to unload the texture and free the surface here too.
-	app->tex->UnLoad(textureFrame);
-	SDL_FreeSurface(surface);
-
-	// TODO 1.1: Remember that whenever we have made you AVIFileInit () we must also close it 
+	// TODO 2.1: Close the library
 	AVIFileExit();
-
-	// TODO 6.1: Stop the music 
-	Mix_HaltMusic();
-	
-	// TODO 3.1: Restore FPS 
-	app->ChangeFPS(prevFPS);
-
-	active = false;
 
 	return ret;
 }

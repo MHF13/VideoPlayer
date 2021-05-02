@@ -39,6 +39,8 @@ public:
 private:
 
 	void NextFrame();
+	void CloseVideoPlayer();
+
 
 	PAVIFILE fileAVI = nullptr;
 	AVIFILEINFO fileInfo = {0};
