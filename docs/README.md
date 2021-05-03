@@ -3,9 +3,9 @@
 # Links
 - [Vfw.h documentation](https://docs.microsoft.com/en-us/windows/win32/api/vfw/)
 - [Presentation](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
-- [Handout](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
+- [Handout](https://github.com/MHF13/VideoPlayer/tree/main/handout)
 - [Solution](https://github.com/MHF13/VideoPlayer/tree/main/Solution) 
-- [Release](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
+- [Release](https://github.com/MHF13/VideoPlayer/releases/tag/v1.0)
 
 # My goal 
 The objective of this research has been the implementation of a video player in a project structure as similar as possible to the one used in the project 2 subject at the university.
@@ -110,7 +110,7 @@ Following the TODOs we can see this structure:
 # TODOs
 If you download the Release and open the Handout you can, following these TODOs, implement a video player in a small project. To do this we will use Vfw.h, which is a header which is available in windows without having to download anything. 
 
-## TODO 0
+## TODO 0 (If you use the Release this step will not be necessary)
 Before starting, you have to unzip the video so that it can be read by our program.
 Go to "\Output\Assets\Video" and unzip the file called video1.zip, it is important that the video and audio have the same name. 
 

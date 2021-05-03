@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+	<app framerate_cap="60">
+		<title>VideoPlayer</title>
+		<organization>UPC</organization>
+	</app>
+	<renderer>
+		<vsync value="0" />
+	</renderer>
+	<window>
+		<resolution width="640" height="360" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+</config>

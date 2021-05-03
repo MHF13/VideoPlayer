@@ -61,7 +61,6 @@ bool VideoPlayer::StartVideo(char* filePath)
 	strcpy_s(video, nieuwSize, path.GetString());
 	strcat_s(video, nieuwSize, ".avi");
 
-
 	// TODO 2: Access the video information 
 	// Open input AVI file
 	AVIFileOpenA(&fileAVI, (LPCSTR)video, OF_SHARE_DENY_WRITE, NULL);
@@ -77,7 +76,6 @@ bool VideoPlayer::StartVideo(char* filePath)
 	if (fileStream == NULL)
 		LOG("Failed To Open The AVI Stream");
 
-
 	// TODO 3: Set the program to the framerate of the video 
 	nFrames = AVIStreamLength(fileStream); // Video frames  
 	timeVideo = AVIStreamLengthTime(fileStream) / 1000; // Video time in seconds 
@@ -85,8 +83,6 @@ bool VideoPlayer::StartVideo(char* filePath)
 	FPS = nFrames / timeVideo; // fps of the video 
 	prevFPS = app->GetFramerate(); // Save actual framerate
 	app->ChangeFPS(FPS); // Change FPS
-
-
 
 	/* 
 	TODO 4: Decompressing the frames of the video stream 
@@ -96,7 +92,6 @@ bool VideoPlayer::StartVideo(char* filePath)
 	frmSequence = AVIStreamGetFrameOpen(fileStream, NULL);
 	if (frmSequence == NULL)
 		LOG("Failed To Open The AVI Frame");
-
 
 	// TODO BONUS: Initialize skip bar parameters 
 	skip = false;
