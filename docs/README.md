@@ -354,5 +354,17 @@ bool VideoPlayer::CloseVideoPlayer()
 ```
 
 # TODO BONUS
-
+This TODO is not necessary for the use of the video player, **BUT** it is important to me for 2 reasons:
+1. I hate not being able to pass cinematics in video games
+2. I hate that they skip instantly at the push of a button 
  
+This TODO consists of creating a small bar that does 3 basic things
+* Appear when a button is held down (I've used the spacebar)
+* While the button is pressed the bar is completed
+* When the bar is full the video skip automatically
+
+I have also added some details like if you stop pressing the button the bar will be emptied and if it is completely emptied the progress bar will disappear 
+
+I leave you already created and initialized all the variables that I have used to create this TODO.
+Feel free to do this extra exercise however you like.
+To draw them you will only need: app-> render-> DrawRectangle () 
