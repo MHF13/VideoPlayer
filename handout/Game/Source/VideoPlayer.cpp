@@ -62,6 +62,7 @@ bool VideoPlayer::StartVideo(char* filePath)
 	strcpy_s(video, nieuwSize, path.GetString());
 	strcat_s(video, nieuwSize, ".avi");
 
+
 	// TODO 2: Access the video information 
 	// Open input AVI file
 
@@ -78,6 +79,12 @@ bool VideoPlayer::StartVideo(char* filePath)
 
 	// TODO 3: Set the program to the framerate of the video 
 	
+	// nFrames = // Video frames  
+	// timeVideo =  // Video time in seconds 
+
+	FPS = nFrames / timeVideo; // fps of the video 
+	prevFPS = app->GetFramerate(); // Save actual framerate
+	app->ChangeFPS(FPS); // Change FPS
 
 	/* 
 	TODO 4: Decompressing the frames of the video stream 
@@ -123,7 +130,6 @@ bool VideoPlayer::Update(float dt)
 	case START:
 	{
 		// TODO 6: Play music
-
 
 		NextFrame();
 		state = PLAY;
@@ -182,12 +188,6 @@ void VideoPlayer::CloseVideoPlayer()
 	finish = true;
 
 	// TODO 7.1:Remember to unload the texture and free the surface here too.
-
-
-	// TODO 6.1: Stop the music 
-
-
-	// TODO 3.1: Restore FPS 
 
 
 	active = false;
