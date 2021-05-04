@@ -2,7 +2,6 @@
 
 # Links
 - [Vfw.h documentation](https://docs.microsoft.com/en-us/windows/win32/api/vfw/)
-- [Presentation](https://docs.microsoft.com/en-us/windows/win32/api/vfw/) X
 - [Handout](https://github.com/MHF13/VideoPlayer/tree/main/handout)
 - [Solution](https://github.com/MHF13/VideoPlayer/tree/main/Solution) 
 - [Release](https://github.com/MHF13/VideoPlayer/releases/tag/v1.0)
@@ -56,7 +55,7 @@ This function close the AVIFile library.
 
 ### AVIFileOpenA(PAVIFILE &fileAVI,LPCSTR (LPCSTR)video,UINT OF_SHARE_DENY_WRITE,LPCLSID NULL)
 This open input AVI file
-* fileAVI: Pointer to a buffer that receives the new IAVIFile interface pointer.
+* fileAVI: Pointer to a buffer that receives the new PAVIFile interface pointer.
 * video: string containing the name of the file to open.
 * OF_SHARE_DENY_WRITE: Access mode to use when opening the file.
 
@@ -135,7 +134,7 @@ It is important that the path is unformatted so that it can be used for both aud
 bool Scene::Start()
 {
   ...
-  // TODO 1: Play video
+  // TODO 1: Load video
   videoActive = app->video->StartVideo("Assets/Video/video1");
   ...
 }
@@ -367,4 +366,4 @@ I have also added some details like if you stop pressing the button the bar will
 
 I leave you already created and initialized all the variables that I have used to create this TODO.
 Feel free to do this extra exercise however you like.
-To draw them you will only need: app-> render-> DrawRectangle () 
+To draw them you will only need: app-> render-> DrawRectangle() 
